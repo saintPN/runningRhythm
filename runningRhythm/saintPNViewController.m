@@ -7,6 +7,7 @@
 //
 
 #import "saintPNViewController.h"
+#import "saintPNTableViewController.h"
 
 
 @implementation saintPNViewController
@@ -22,14 +23,8 @@
     [self.dataModel getSandBoxMusic];
     [self.dataModel getSandBoxImage];
     
-    self.navigationController.navigationBarHidden = YES;
     [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showingTime) userInfo:nil repeats:YES];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults boolForKey:@"first launch"]) {
-        self.guideView = [[saintPNGuideView alloc] initWithFrame:self.view.frame];
-        self.guideView.delegate = self;
-        [self.view addSubview:self.guideView];
-    }
     if ([defaults integerForKey:@"row"] >= 0) {
         [self.timePickerView selectRow:[defaults integerForKey:@"row"] inComponent:0 animated:YES];
     } else {
@@ -132,21 +127,6 @@
     [self.view insertSubview:self.imageView atIndex:0];
 }
 
-#pragma mark - guideView delegate
-
-- (void)didPressedSkipButton {
-    //第一次启动介绍图片跳过按钮
-    [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.guideView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.guideView removeFromSuperview];
-    }];
-    self.navigationController.navigationBarHidden = NO;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:YES forKey:@"first launch"];
-    [self ifMusicExit];
-}
-
 #pragma mark - PickerView
 
 - (void)settingPickerView {
@@ -165,7 +145,7 @@
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 55, 55)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 58, 58)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
     label.text = [self.dataArray objectAtIndex:row];
@@ -176,24 +156,11 @@
 #pragma mark - 按钮事件
 
 - (IBAction)helpInfo:(UIBarButtonItem *)sender {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"帮助信息"
-                                                                   message:@"向右滑动开启音乐列表,向左滑动查看说明"
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"帮助"
+                                                                   message:@"向右滑动查看音乐,向左滑动查看说明"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"明白" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {}];
-    [alert addAction:defaultAction];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-
-}
-
-- (IBAction)contact:(UIBarButtonItem *)sender {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"联系作者"
-                                                                   message:@"有任何建议或意见可联系saintPN@foxmail.com"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {}];
     [alert addAction:defaultAction];
     
@@ -221,10 +188,11 @@
     dispatch_source_set_timer(self.timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_timer, ^{
         if(weakSelf.countdownTime == 0){
+            [weakSelf saveRun];
             [defaults removeObjectForKey:@"countdownTime"];
             dispatch_source_cancel(weakSelf.timer);
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.countdownLabel.text = @"完成目标";
+                weakSelf.countdownLabel.text = @"完成目标!";
                 weakSelf.timer = nil;
                 [weakSelf.player pause];
             });
@@ -265,10 +233,11 @@
     dispatch_source_set_timer(self.timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_timer, ^{
         if(weakSelf.countdownTime == 0){
+            [weakSelf saveRun];
             [defaults removeObjectForKey:@"countdownTime"];
             dispatch_source_cancel(weakSelf.timer);
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.countdownLabel.text = @"00:00";
+                weakSelf.countdownLabel.text = @"完成目标!";
                 weakSelf.timer = nil;
                 [weakSelf.player pause];
             });
@@ -293,6 +262,7 @@
 }
 
 - (IBAction)reset:(UIButton *)sender {
+    [self saveRun];
     self.timer = nil;
     self.countdownTime = 0;
     self.countdownLabel.text = @"00:00";
@@ -303,6 +273,24 @@
     self.onceLabel.text = [NSString stringWithFormat:@"本次奔跑:%ld分%ld秒", self.runTime / 60, self.runTime % 60];
     self.totalLabel.text = [NSString stringWithFormat:@"累计奔跑:%ld分%ld秒", self.totalTime / 60, self.totalTime % 60];
     
+}
+
+#pragma mark - 保存记录
+
+- (void)saveRun {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    self.managedObjectModel = [appDelegate managedObjectModel];
+    
+    RUN *newRun = [NSEntityDescription insertNewObjectForEntityForName:@"RUN" inManagedObjectContext:self.managedObjectContext];
+    newRun.duration = [NSNumber numberWithInteger:self.runTime];
+    newRun.date = [NSDate date];
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"出现错误:%@, %@", error, [error userInfo]);
+        abort();
+    }
 }
 
 #pragma mark - 播放器逻辑

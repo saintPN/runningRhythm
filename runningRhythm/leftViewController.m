@@ -42,7 +42,7 @@
     });
     [self.view addSubview:self.tableView];
     self.label = ({
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, (self.view.frame.size.height - 54 * 9), 100, 30)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, (self.view.frame.size.height - 54 * 10), 100, 30)];
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor cyanColor];
         label.font = [UIFont fontWithName:@"HelveticaNeue" size:20];

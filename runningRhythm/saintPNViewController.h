@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "saintPNDataModel.h"
-#import "saintPNGuideView.h"
+#import "AppDelegate.h"
+#import "RUN.h"
 
 
-@interface saintPNViewController : UIViewController <UIPickerViewDataSource,UIPickerViewDelegate,saintPNGuideViewDelegate>
+@interface saintPNViewController : UIViewController <UIPickerViewDataSource,UIPickerViewDelegate>
 
 @property (strong, nonatomic) UIImageView *imageView;
-
-@property (strong, nonatomic) saintPNGuideView *guideView;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *timePickerView;
 
@@ -40,6 +39,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *onceLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 
 @property BOOL isPlaying;
 

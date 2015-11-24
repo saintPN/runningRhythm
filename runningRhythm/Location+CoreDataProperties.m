@@ -1,5 +1,5 @@
 //
-//  RUN+CoreDataProperties.m
+//  Location+CoreDataProperties.m
 //  runningRhythm
 //
 //  Created by saintPN on 15/11/14.
@@ -9,13 +9,13 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "RUN+CoreDataProperties.h"
+#import "Location+CoreDataProperties.h"
 
-@implementation RUN (CoreDataProperties)
+@implementation Location (CoreDataProperties)
 
 @dynamic date;
-@dynamic distance;
-@dynamic duration;
-@dynamic locations;
+@dynamic latitude;
+@dynamic longitude;
+@dynamic run;
 
 @end

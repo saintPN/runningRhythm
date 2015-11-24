@@ -18,19 +18,12 @@
     [super viewDidLoad];
     
     [self doInit];
-    [self settingPickerView];
     [self.dataModel getiPODMusic];
     [self.dataModel getSandBoxMusic];
     [self.dataModel getSandBoxImage];
     
     [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showingTime) userInfo:nil repeats:YES];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults integerForKey:@"row"] >= 0) {
-        [self.timePickerView selectRow:[defaults integerForKey:@"row"] inComponent:0 animated:YES];
-    } else {
-        [self.timePickerView selectRow:2 inComponent:0 animated:YES];
-    }
-    
     if (self.dataModel.imageURLArray.count) {
         [self userBackGroundImage];
     } else {
@@ -39,6 +32,8 @@
     if ([defaults integerForKey:@"totalTime"]) {
         self.totalTime = [defaults integerForKey:@"totalTime"];
     }
+    self.speedLabel.text = @"速度:0.0米/秒";
+    self.distanceLabel.text = @"距离:0.0公里";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -74,6 +69,9 @@
     
     [self.player pause];
     self.timer = nil;
+    if (self.locationManager) {
+        [self.locationManager stopUpdatingLocation];
+    }
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -87,6 +85,8 @@
     self.dataArray = [[NSArray alloc] init];
     self.dataModel = [[saintPNDataModel alloc] init];
     self.imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    self.locationsArray = [[NSMutableArray alloc] init];
+
 }
 
 - (void)ifMusicExit {
@@ -127,32 +127,6 @@
     [self.view insertSubview:self.imageView atIndex:0];
 }
 
-#pragma mark - PickerView
-
-- (void)settingPickerView {
-    self.timePickerView.dataSource =self;
-    self.timePickerView.delegate = self;
-    NSArray *array1 = [[NSArray alloc] initWithObjects:@"10分钟", @"20分钟", @"30分钟", @"40分钟", @"50分钟", @"60分钟", nil];
-    self.dataArray = array1;
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [self.dataArray count];
-}
-
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 58, 58)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor whiteColor];
-    label.text = [self.dataArray objectAtIndex:row];
-    
-    return label;
-}
-
 #pragma mark - 按钮事件
 
 - (IBAction)helpInfo:(UIBarButtonItem *)sender {
@@ -170,38 +144,28 @@
 
 - (IBAction)countDown:(UIButton *)sender {
     __weak __typeof (self) weakSelf = self;
-    
+    [self startLocating];
     if (self.timer) {
         return;
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"countdownTime"];
+    if (![defaults objectForKey:@"firstRunDate"]) {
+        [defaults setObject:[NSDate date] forKey:@"firstRunDate"];
+    }
     
-    [defaults setInteger:[self.timePickerView selectedRowInComponent:0] forKey:@"row"];
-    NSString *string1 = [[NSString alloc]initWithString:[self.dataArray objectAtIndex:[self.timePickerView selectedRowInComponent:0]]];
-    NSString *string2 = [string1 substringWithRange:NSMakeRange(0, 2)];
-    self.countdownTime = [string2 integerValue] * 60;
+    
     self.runTime = 0;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(self.timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_timer, ^{
-        if(weakSelf.countdownTime == 0){
-            [weakSelf saveRun];
-            [defaults removeObjectForKey:@"countdownTime"];
-            dispatch_source_cancel(weakSelf.timer);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.countdownLabel.text = @"完成目标!";
-                weakSelf.timer = nil;
-                [weakSelf.player pause];
-            });
-        }else{
-            weakSelf.countdownTime--;
-            [defaults setInteger:weakSelf.countdownTime forKey:@"countdownTime"];
-            weakSelf.totalTime ++;
-            [defaults setInteger:weakSelf.totalTime forKey:@"totalTime"];
-            dispatch_async(dispatch_get_main_queue(), ^{
+        weakSelf.countdownTime++;
+        [defaults setInteger:weakSelf.countdownTime forKey:@"countdownTime"];
+        weakSelf.totalTime ++;
+        [defaults setInteger:weakSelf.totalTime forKey:@"totalTime"];
+        dispatch_async(dispatch_get_main_queue(), ^{
             NSInteger min = weakSelf.countdownTime / 60;
             NSInteger sec = weakSelf.countdownTime % 60;
             if (sec < 10) {
@@ -209,19 +173,20 @@
             } else {
                 weakSelf.countdownLabel.text = [NSString stringWithFormat:@"%ld:%ld", (long)min,(long)sec];
             }
-            });
-            weakSelf.runTime++;
-        }
+            weakSelf.speedLabel.text = [NSString stringWithFormat:@"速度:%0.1f米/秒", weakSelf.distance/weakSelf.countdownTime];
+            weakSelf.distanceLabel.text = [NSString stringWithFormat:@"距离:%0.1f公里", self.distance/1000];
+
+        });
+        weakSelf.runTime++;
     });
     dispatch_resume(weakSelf.timer);
-
 }
 
 - (void)countdownWithTime:(NSInteger)time {
     __weak __typeof (self) weakSelf = self;
     self.countdownTime = time;
+    [self startLocating];
     if (self.timer) {
-        
         return;
     }
     
@@ -232,47 +197,42 @@
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(self.timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_timer, ^{
-        if(weakSelf.countdownTime == 0){
-            [weakSelf saveRun];
-            [defaults removeObjectForKey:@"countdownTime"];
-            dispatch_source_cancel(weakSelf.timer);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.countdownLabel.text = @"完成目标!";
-                weakSelf.timer = nil;
-                [weakSelf.player pause];
-            });
-        }else{
-            weakSelf.countdownTime--;
-            [defaults setInteger:weakSelf.countdownTime forKey:@"countdownTime"];
-            weakSelf.totalTime ++;
-            [defaults setInteger:weakSelf.totalTime forKey:@"totalTime"];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSInteger min = weakSelf.countdownTime / 60;
-                NSInteger sec = weakSelf.countdownTime % 60;
-                if (sec < 10) {
-                    weakSelf.countdownLabel.text = [NSString stringWithFormat:@"%ld:0%ld", (long)min,(long)sec];
-                } else {
-                    weakSelf.countdownLabel.text = [NSString stringWithFormat:@"%ld:%ld", (long)min,(long)sec];
-                }
-            });
-            weakSelf.runTime++;
-        }
+        weakSelf.countdownTime++;
+        [defaults setInteger:weakSelf.countdownTime forKey:@"countdownTime"];
+        weakSelf.totalTime ++;
+        [defaults setInteger:weakSelf.totalTime forKey:@"totalTime"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSInteger min = weakSelf.countdownTime / 60;
+            NSInteger sec = weakSelf.countdownTime % 60;
+            if (sec < 10) {
+                weakSelf.countdownLabel.text = [NSString stringWithFormat:@"%ld:0%ld", (long)min,(long)sec];
+            } else {
+                weakSelf.countdownLabel.text = [NSString stringWithFormat:@"%ld:%ld", (long)min,(long)sec];
+            }
+            weakSelf.speedLabel.text = [NSString stringWithFormat:@"速度:%0.1f米/秒", weakSelf.distance/60];
+            weakSelf.distanceLabel.text = [NSString stringWithFormat:@"距离:%0.1f公里", weakSelf.distance/1000];
+        });
+        weakSelf.runTime++;
     });
     dispatch_resume(weakSelf.timer);
 }
 
 - (IBAction)reset:(UIButton *)sender {
-    [self saveRun];
-    self.timer = nil;
-    self.countdownTime = 0;
-    self.countdownLabel.text = @"00:00";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"countdownTime"];
-    self.totalTime = [defaults integerForKey:@"totalTime"];
-    
-    self.onceLabel.text = [NSString stringWithFormat:@"本次奔跑:%ld分%ld秒", self.runTime / 60, self.runTime % 60];
-    self.totalLabel.text = [NSString stringWithFormat:@"累计奔跑:%ld分%ld秒", self.totalTime / 60, self.totalTime % 60];
-    
+    if ([defaults integerForKey:@"countdownTime"]) {
+        [defaults removeObjectForKey:@"countdownTime"];
+        if (self.locationManager) {
+            [self.locationManager stopUpdatingLocation];
+        }
+        
+        [self saveRun];
+        self.timer = nil;
+        self.distance = 0;
+        self.countdownTime = 0;
+        self.countdownLabel.text = @"00:00";
+        self.speedLabel.text = @"速度:0.0米/秒";
+        self.distanceLabel.text = @"距离:0.0公里";
+    }
 }
 
 #pragma mark - 保存记录
@@ -282,9 +242,21 @@
     self.managedObjectContext = [appDelegate managedObjectContext];
     self.managedObjectModel = [appDelegate managedObjectModel];
     
-    RUN *newRun = [NSEntityDescription insertNewObjectForEntityForName:@"RUN" inManagedObjectContext:self.managedObjectContext];
+    RUN *newRun = [NSEntityDescription insertNewObjectForEntityForName:@"Run" inManagedObjectContext:self.managedObjectContext];
     newRun.duration = [NSNumber numberWithInteger:self.runTime];
+    newRun.distance = [NSNumber numberWithFloat:self.distance];
     newRun.date = [NSDate date];
+    
+    NSMutableArray *array = [NSMutableArray array];
+    for (CLLocation *location in self.locationsArray) {
+        Location *locationObject = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+        locationObject.date = location.timestamp;
+        locationObject.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+        locationObject.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+        [array addObject:locationObject];
+    }
+    newRun.locations = [NSOrderedSet orderedSetWithArray:array];
+    self.run = newRun;
     
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
@@ -292,7 +264,6 @@
         abort();
     }
 }
-
 #pragma mark - 播放器逻辑
 
 - (IBAction)play:(UIButton *)sender {
@@ -422,6 +393,56 @@
         self.playingNumber --;
     }
     [self playerReload];
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)startLocating {
+    if (!self.locationManager) {
+        self.locationManager = [[CLLocationManager alloc] init];
+    }
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.activityType = CLActivityTypeFitness;
+    self.locationManager.distanceFilter = 3;
+    
+    [self.locationManager requestAlwaysAuthorization];
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    for (CLLocation *newLocation in locations) {
+        NSDate *date = newLocation.timestamp;
+        NSTimeInterval timeInterval = [date timeIntervalSinceNow];
+        
+        if (fabs(timeInterval)<10 && newLocation.horizontalAccuracy<15) {
+            
+            if (self.locationsArray.count > 0) {
+                self.distance += [newLocation distanceFromLocation:self.locationsArray.lastObject];
+                CLLocationCoordinate2D coordinates[2];
+                coordinates[0] = ((CLLocation *)self.locationsArray.lastObject).coordinate;
+                coordinates[1] = newLocation.coordinate;
+                MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, 100, 100);
+                [self.mapView setRegion:region animated:YES];
+                [self.mapView addOverlay:[MKPolyline polylineWithCoordinates:coordinates count:2]];
+            }
+            [self.locationsArray addObject:newLocation];
+        }
+    }
+}
+
+#pragma mark - MKMapViewDelegate
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    if ([overlay isKindOfClass:[MKPolyline class]]) {
+        MKPolyline *polyLine = (MKPolyline *)overlay;
+        MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:polyLine];
+        renderer.strokeColor = [UIColor blueColor];
+        renderer.lineWidth = 3;
+        
+        return renderer;
+    }
+    return nil;
 }
 
 @end

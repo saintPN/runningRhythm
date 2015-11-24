@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "saintPNDataModel.h"
 #import "AppDelegate.h"
 #import "RUN.h"
+#import "Location.h"
 
 
-@interface saintPNViewController : UIViewController <UIPickerViewDataSource,UIPickerViewDelegate>
+@interface saintPNViewController : UIViewController <CLLocationManagerDelegate,MKMapViewDelegate>
 
 @property (strong, nonatomic) UIImageView *imageView;
-
-@property (weak, nonatomic) IBOutlet UIPickerView *timePickerView;
 
 @property (strong, nonatomic) NSArray *dataArray;
 
@@ -25,6 +25,18 @@
 @property (weak, nonatomic) IBOutlet UISlider *musicSlider;
 
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
+@property (strong, nonatomic) NSMutableArray *locationsArray;
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+
+@property (strong, nonatomic) RUN *run;
 
 @property (strong, nonatomic) saintPNDataModel *dataModel;
 
@@ -35,10 +47,6 @@
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *onceLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -53,6 +61,8 @@
 @property __block NSInteger totalTime;
 
 @property NSInteger playingNumber;
+
+@property float distance;
 
 @end
 

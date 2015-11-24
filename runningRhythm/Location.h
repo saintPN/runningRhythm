@@ -1,5 +1,5 @@
 //
-//  RUN.h
+//  Location.h
 //  runningRhythm
 //
 //  Created by saintPN on 15/11/14.
@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Location;
+@class RUN;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RUN : NSManagedObject
+@interface Location : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -21,4 +21,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "RUN+CoreDataProperties.h"
+#import "Location+CoreDataProperties.h"

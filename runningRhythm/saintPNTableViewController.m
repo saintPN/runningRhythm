@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "RUN.h"
+#import "traceViewController.h"
+
 
 @interface saintPNTableViewController ()
 
@@ -52,7 +54,7 @@
     self.managedObjectModel = [appDelegate managedObjectModel];
     
     NSFetchRequest *fetch = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"RUN" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Run" inManagedObjectContext:self.managedObjectContext];
     fetch.entity = entity;
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
     fetch.sortDescriptors = @[sortDescriptor];
@@ -62,11 +64,52 @@
         [self.durationArray addObject:run.duration];
     }
     self.bestRecord = [self.durationArray valueForKeyPath:@"@max.floatValue"];
+    
     for (RUN *run in self.runArray) {
         if (run.duration == self.bestRecord) {
             self.bestRecordDate = run.date;
         }
     }
+}
+
+#pragma mark - 按钮事件
+
+- (IBAction)deleteData:(UIBarButtonItem *)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"totalTime"];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"警告" message:@"确定清空所有数据?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}];
+    
+    __weak typeof (self) wSelf = self;
+    UIAlertAction* action2 = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive
+                                                    handler:^(UIAlertAction * action) {
+                                                        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                                                        wSelf.managedObjectContext = [appDelegate managedObjectContext];
+                                                        wSelf.managedObjectModel = [appDelegate managedObjectModel];
+                                                        
+                                                        NSFetchRequest *fetch = [[NSFetchRequest alloc] init];
+                                                        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Run" inManagedObjectContext:wSelf.managedObjectContext];
+                                                        fetch.includesPropertyValues = NO;
+                                                        fetch.entity = entity;
+                                                        
+                                                        NSError *error = nil;
+                                                        NSArray *datas = [wSelf.managedObjectContext executeFetchRequest:fetch error:&error];
+                                                        if (!error && datas && [datas count]) {
+                                                            for (NSManagedObject *obj in datas) {
+                                                                [wSelf.managedObjectContext deleteObject:obj];
+                                                            }
+                                                            if (![wSelf.managedObjectContext save:&error]) {
+                                                                NSLog(@"出现错误:%@", error);
+                                                            }
+                                                        }
+                                                        [wSelf.tableView reloadData];
+                                                        [wSelf.navigationController popViewControllerAnimated:YES];
+                                                        
+                                                    }];
+    [alert addAction:action1];
+    [alert addAction:action2];
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - 设置tableview
@@ -87,13 +130,34 @@
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"奔跑时长";
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor clearColor];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 90, 22)];
+        label.textColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor clearColor];
+        label.text = @"奔跑时长";
+        [view addSubview:label];
+        return view;
     } else  if (section == 1){
-        return @"最佳记录";
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor clearColor];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 90, 22)];
+        label.textColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor clearColor];
+        label.text = @"最佳记录";
+        [view addSubview:label];
+        return view;
     } else {
-        return @"历史记录";
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor clearColor];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 90, 22)];
+        label.textColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor clearColor];
+        label.text = @"历史记录";
+        [view addSubview:label];
+        return view;
     }
 }
 
@@ -120,9 +184,42 @@
     } else {
         RUN *run = self.runArray[indexPath.row];
         cell.textLabel.text = [formatter stringFromDate:run.date];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@分钟", run.duration];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld分%ld秒", [run.duration integerValue]/60,[run.duration integerValue]%60];
     }
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        [self performSegueWithIdentifier:@"detailSegue" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"statisticsSegue" sender:nil];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue destinationViewController] isKindOfClass:[traceViewController class]]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        RUN *run = self.runArray[indexPath.row];
+        [(traceViewController *)[segue destinationViewController] setRun:run];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

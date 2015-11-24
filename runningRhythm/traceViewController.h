@@ -1,16 +1,16 @@
 //
-//  RUN.m
+//  traceViewController.h
 //  runningRhythm
 //
 //  Created by saintPN on 15/11/14.
 //  Copyright © 2015年 saintPN. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "RUN.h"
-#import "Location.h"
 
-@implementation RUN
+@interface traceViewController : UIViewController
 
-// Insert code here to add functionality to your managed object subclass
+@property (strong, nonatomic) RUN *run;
 
 @end

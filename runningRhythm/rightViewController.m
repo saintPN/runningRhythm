@@ -27,7 +27,7 @@
         textview.font = [UIFont fontWithName:@"HelveticaNeue" size:18];
         textview.textColor = [UIColor whiteColor];
         textview.textAlignment = NSTextAlignmentLeft;
-        textview.text = @"1.通过itunes导入音乐\n2.导入图片(750x1334)作为随机背景图片\n3.选择时间,沙漏按钮开始,圆圈按钮重置\n4.建议或意见:\nsaintPN@foxmail.com";
+        textview.text = @"1.通过itunes导入音乐\n2.导入图片(750x1334)作为随机背景图片\n3.沙漏按钮开始,圆圈按钮重置\n4.建议或意见:\nsaintPN@foxmail.com";
         textview;
     });
     [self.view addSubview:self.textview];

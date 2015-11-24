@@ -19,9 +19,14 @@
 		851B417C1B920FB900DA7CE5 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 851B41791B920FB900DA7CE5 /* UIViewController+RESideMenu.m */; };
 		851B417F1B92AE8A00DA7CE5 /* leftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 851B417E1B92AE8A00DA7CE5 /* leftViewController.m */; };
 		85310AC41B988FE100BDB83F /* rightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85310AC31B988FE100BDB83F /* rightViewController.m */; };
+		857096DF1BF81DC500913922 /* satisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 857096DE1BF81DC500913922 /* satisticsTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		858831261BF6D03A003F1841 /* Location+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8588311F1BF6D03A003F1841 /* Location+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		858831271BF6D03A003F1841 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 858831211BF6D03A003F1841 /* Location.m */; settings = {ASSET_TAGS = (); }; };
+		858831281BF6D03A003F1841 /* RUN+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 858831231BF6D03A003F1841 /* RUN+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		858831291BF6D03A003F1841 /* RUN.m in Sources */ = {isa = PBXBuildFile; fileRef = 858831251BF6D03A003F1841 /* RUN.m */; settings = {ASSET_TAGS = (); }; };
+		8588312B1BF6D4D7003F1841 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8588312A1BF6D4D7003F1841 /* MapKit.framework */; };
+		858831311BF77DC7003F1841 /* traceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858831301BF77DC7003F1841 /* traceViewController.m */; settings = {ASSET_TAGS = (); }; };
 		85A51D501BD7BC530043BE66 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85A51D4E1BD7BC530043BE66 /* Model.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
-		85A51D551BD7BEB80043BE66 /* RUN+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A51D521BD7BEB80043BE66 /* RUN+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		85A51D561BD7BEB80043BE66 /* RUN.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A51D541BD7BEB80043BE66 /* RUN.m */; settings = {ASSET_TAGS = (); }; };
 		85A51D581BD7C22A0043BE66 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85A51D571BD7C22A0043BE66 /* CoreData.framework */; };
 		85A51D5B1BDE55050043BE66 /* saintPNTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A51D5A1BDE55050043BE66 /* saintPNTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		85C4F3611B739DA90063CA54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C4F3601B739DA90063CA54 /* main.m */; };
@@ -64,11 +69,20 @@
 		851B417E1B92AE8A00DA7CE5 /* leftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = leftViewController.m; sourceTree = "<group>"; };
 		85310AC21B988FE100BDB83F /* rightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rightViewController.h; sourceTree = "<group>"; };
 		85310AC31B988FE100BDB83F /* rightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rightViewController.m; sourceTree = "<group>"; };
+		857096DD1BF81DC500913922 /* satisticsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = satisticsTableViewController.h; sourceTree = "<group>"; };
+		857096DE1BF81DC500913922 /* satisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = satisticsTableViewController.m; sourceTree = "<group>"; };
+		8588311E1BF6D03A003F1841 /* Location+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Location+CoreDataProperties.h"; sourceTree = "<group>"; };
+		8588311F1BF6D03A003F1841 /* Location+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Location+CoreDataProperties.m"; sourceTree = "<group>"; };
+		858831201BF6D03A003F1841 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		858831211BF6D03A003F1841 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		858831221BF6D03A003F1841 /* RUN+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RUN+CoreDataProperties.h"; sourceTree = "<group>"; };
+		858831231BF6D03A003F1841 /* RUN+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RUN+CoreDataProperties.m"; sourceTree = "<group>"; };
+		858831241BF6D03A003F1841 /* RUN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RUN.h; sourceTree = "<group>"; };
+		858831251BF6D03A003F1841 /* RUN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RUN.m; sourceTree = "<group>"; };
+		8588312A1BF6D4D7003F1841 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		8588312F1BF77DC7003F1841 /* traceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = traceViewController.h; sourceTree = "<group>"; };
+		858831301BF77DC7003F1841 /* traceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = traceViewController.m; sourceTree = "<group>"; };
 		85A51D4F1BD7BC530043BE66 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		85A51D511BD7BEB80043BE66 /* RUN+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RUN+CoreDataProperties.h"; sourceTree = "<group>"; };
-		85A51D521BD7BEB80043BE66 /* RUN+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RUN+CoreDataProperties.m"; sourceTree = "<group>"; };
-		85A51D531BD7BEB80043BE66 /* RUN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RUN.h; sourceTree = "<group>"; };
-		85A51D541BD7BEB80043BE66 /* RUN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RUN.m; sourceTree = "<group>"; };
 		85A51D571BD7C22A0043BE66 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		85A51D591BDE55050043BE66 /* saintPNTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saintPNTableViewController.h; sourceTree = "<group>"; };
 		85A51D5A1BDE55050043BE66 /* saintPNTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saintPNTableViewController.m; sourceTree = "<group>"; };
@@ -92,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8588312B1BF6D4D7003F1841 /* MapKit.framework in Frameworks */,
 				85A51D581BD7C22A0043BE66 /* CoreData.framework in Frameworks */,
 				851B41501B90306800DA7CE5 /* Foundation.framework in Frameworks */,
 				851B414E1B90306100DA7CE5 /* UIKit.framework in Frameworks */,
@@ -122,11 +137,15 @@
 		851B41681B9168C500DA7CE5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8588311E1BF6D03A003F1841 /* Location+CoreDataProperties.h */,
+				8588311F1BF6D03A003F1841 /* Location+CoreDataProperties.m */,
+				858831201BF6D03A003F1841 /* Location.h */,
+				858831211BF6D03A003F1841 /* Location.m */,
+				858831221BF6D03A003F1841 /* RUN+CoreDataProperties.h */,
+				858831231BF6D03A003F1841 /* RUN+CoreDataProperties.m */,
+				858831241BF6D03A003F1841 /* RUN.h */,
+				858831251BF6D03A003F1841 /* RUN.m */,
 				85A51D4E1BD7BC530043BE66 /* Model.xcdatamodeld */,
-				85A51D511BD7BEB80043BE66 /* RUN+CoreDataProperties.h */,
-				85A51D521BD7BEB80043BE66 /* RUN+CoreDataProperties.m */,
-				85A51D531BD7BEB80043BE66 /* RUN.h */,
-				85A51D541BD7BEB80043BE66 /* RUN.m */,
 				851B41451B9025EC00DA7CE5 /* saintPNDataModel.h */,
 				851B41461B9025EC00DA7CE5 /* saintPNDataModel.m */,
 			);
@@ -145,6 +164,10 @@
 				85C4F3661B739DA90063CA54 /* saintPNViewController.m */,
 				85A51D591BDE55050043BE66 /* saintPNTableViewController.h */,
 				85A51D5A1BDE55050043BE66 /* saintPNTableViewController.m */,
+				857096DD1BF81DC500913922 /* satisticsTableViewController.h */,
+				857096DE1BF81DC500913922 /* satisticsTableViewController.m */,
+				8588312F1BF77DC7003F1841 /* traceViewController.h */,
+				858831301BF77DC7003F1841 /* traceViewController.m */,
 				851B417D1B92AE8A00DA7CE5 /* leftViewController.h */,
 				851B417E1B92AE8A00DA7CE5 /* leftViewController.m */,
 				85310AC21B988FE100BDB83F /* rightViewController.h */,
@@ -203,6 +226,7 @@
 			children = (
 				85C4F35F1B739DA90063CA54 /* Info.plist */,
 				85C4F3601B739DA90063CA54 /* main.m */,
+				8588312A1BF6D4D7003F1841 /* MapKit.framework */,
 				85A51D571BD7C22A0043BE66 /* CoreData.framework */,
 				851B414F1B90306800DA7CE5 /* Foundation.framework */,
 				851B414D1B90306100DA7CE5 /* UIKit.framework */,
@@ -332,18 +356,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				851B417A1B920FB900DA7CE5 /* RECommonFunctions.m in Sources */,
+				858831271BF6D03A003F1841 /* Location.m in Sources */,
 				85C4F3671B739DA90063CA54 /* saintPNViewController.m in Sources */,
-				85A51D551BD7BEB80043BE66 /* RUN+CoreDataProperties.m in Sources */,
+				858831281BF6D03A003F1841 /* RUN+CoreDataProperties.m in Sources */,
 				851B41471B9025EC00DA7CE5 /* saintPNDataModel.m in Sources */,
 				85C4F3641B739DA90063CA54 /* AppDelegate.m in Sources */,
+				857096DF1BF81DC500913922 /* satisticsTableViewController.m in Sources */,
 				85A51D5B1BDE55050043BE66 /* saintPNTableViewController.m in Sources */,
-				85A51D561BD7BEB80043BE66 /* RUN.m in Sources */,
 				851B41661B9168A400DA7CE5 /* rootViewController.m in Sources */,
 				851B41531B90309500DA7CE5 /* saintPNGuideView.m in Sources */,
 				851B417B1B920FB900DA7CE5 /* RESideMenu.m in Sources */,
 				851B417F1B92AE8A00DA7CE5 /* leftViewController.m in Sources */,
 				85C4F3611B739DA90063CA54 /* main.m in Sources */,
+				858831261BF6D03A003F1841 /* Location+CoreDataProperties.m in Sources */,
+				858831311BF77DC7003F1841 /* traceViewController.m in Sources */,
 				851B417C1B920FB900DA7CE5 /* UIViewController+RESideMenu.m in Sources */,
+				858831291BF6D03A003F1841 /* RUN.m in Sources */,
 				85310AC41B988FE100BDB83F /* rightViewController.m in Sources */,
 				85A51D501BD7BC530043BE66 /* Model.xcdatamodeld in Sources */,
 			);
@@ -485,6 +513,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saintPN.runningRhythm;
 				PRODUCT_NAME = "奔跑节奏";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -501,6 +530,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saintPN.runningRhythm;
 				PRODUCT_NAME = "奔跑节奏";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

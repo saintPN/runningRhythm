@@ -76,7 +76,7 @@
 
 - (IBAction)deleteData:(UIBarButtonItem *)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"totalTime"];
+    [defaults setInteger:0 forKey:@"totalTime"];
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"警告" message:@"确定清空所有数据?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}];
     
@@ -167,8 +167,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"recordCell" forIndexPath:indexPath];
-    cell.textLabel.textColor = [UIColor blackColor];
-    cell.detailTextLabel.textColor = [UIColor blackColor];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateStyle = NSDateIntervalFormatterLongStyle;

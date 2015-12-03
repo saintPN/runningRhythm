@@ -23,15 +23,12 @@
     [self.dataModel getSandBoxImage];
     
     [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(showingTime) userInfo:nil repeats:YES];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (self.dataModel.imageURLArray.count) {
         [self userBackGroundImage];
     } else {
         [self randomBackGroundImage];
     }
-    if ([defaults integerForKey:@"totalTime"]) {
-        self.totalTime = [defaults integerForKey:@"totalTime"];
-    }
+
     self.speedLabel.text = @"速度:0.0米/秒";
     self.distanceLabel.text = @"距离:0.0公里";
 }
@@ -154,9 +151,10 @@
     if (![defaults objectForKey:@"firstRunDate"]) {
         [defaults setObject:[NSDate date] forKey:@"firstRunDate"];
     }
-    
-    
+    self.totalTime = [defaults integerForKey:@"totalTime"];
+    self.countdownTime = 0;
     self.runTime = 0;
+    
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(self.timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0);
@@ -192,7 +190,9 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:@"countdownTime"];
+    self.totalTime = [defaults integerForKey:@"totalTime"];
     self.runTime = 0;
+    
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
     dispatch_source_set_timer(self.timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0);
@@ -415,7 +415,7 @@
         NSDate *date = newLocation.timestamp;
         NSTimeInterval timeInterval = [date timeIntervalSinceNow];
         
-        if (fabs(timeInterval)<10 && newLocation.horizontalAccuracy<15) {
+        if (fabs(timeInterval)<10 && newLocation.horizontalAccuracy<12) {
             
             if (self.locationsArray.count > 0) {
                 self.distance += [newLocation distanceFromLocation:self.locationsArray.lastObject];
@@ -437,7 +437,7 @@
     if ([overlay isKindOfClass:[MKPolyline class]]) {
         MKPolyline *polyLine = (MKPolyline *)overlay;
         MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:polyLine];
-        renderer.strokeColor = [UIColor blueColor];
+        renderer.strokeColor = [UIColor redColor];
         renderer.lineWidth = 3;
         
         return renderer;

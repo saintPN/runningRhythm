@@ -7,8 +7,12 @@
 //
 
 #import "traceViewController.h"
+#import "AppDelegate.h"
 #import <MapKit/MapKit.h>
 #import "Location.h"
+#import "WXApi.h"
+#import "WXApiObject.h"
+#import "saintPNDataModel.h"
 
 
 @interface traceViewController ()
@@ -23,6 +27,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *speedLabel;
 
+@property (strong, nonatomic) saintPNDataModel *dataModel;
+
+@property (strong, nonatomic) UIImageView *imageView;
+
 @end
 
 
@@ -34,6 +42,13 @@
     [self settingUI];
     [self mapRegion];
     [self drawLine];
+    
+    self.imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    if (self.dataModel.imageURLArray.count) {
+        [self userBackGroundImage];
+    } else {
+        [self randomBackGroundImage];
+    }
 }
 
 - (void)settingUI {
@@ -99,12 +114,77 @@
     if ([overlay isKindOfClass:[MKPolyline class]]) {
         MKPolyline *polyLine = (MKPolyline *)overlay;
         MKPolylineRenderer *aRenderer = [[MKPolylineRenderer alloc] initWithPolyline:polyLine];
-        aRenderer.strokeColor = [UIColor blueColor];
+        aRenderer.strokeColor = [UIColor redColor];
         aRenderer.lineWidth = 3;
         return aRenderer;
     }
     
     return nil;
+}
+
+- (IBAction)shareToWeixin:(UIBarButtonItem *)sender {
+    if ([WXApi isWXAppInstalled]) {
+        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, NO, 0);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [app.window.layer renderInContext:context];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                       message:@"分享到微信朋友圈?"
+                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction* defaultAction1 = [UIAlertAction actionWithTitle:@"分享"
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * action) {
+                                                                   WXImageObject *imageObject = [WXImageObject object];
+                                                                   imageObject.imageData = UIImagePNGRepresentation(image);
+                                                                   WXMediaMessage *mediaMessage = [WXMediaMessage message];
+                                                                   mediaMessage.mediaObject = imageObject;
+                                                                   SendMessageToWXReq *request = [[SendMessageToWXReq alloc] init];
+                                                                   request.bText = NO;
+                                                                   request.message = mediaMessage;
+                                                                   request.scene = WXSceneTimeline;
+                                                                   [WXApi sendReq:request];
+                                                               }];
+        UIAlertAction* defaultAction2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                               handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction1];
+        [alert addAction:defaultAction2];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    } else {
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"错误"
+                                                                       message:@"未安装微信!"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel
+                                                               handler:^(UIAlertAction * action) {}];
+        [alert addAction:defaultAction1];
+    }
+
+}
+
+#pragma mark - 设置背景图片
+
+- (void)randomBackGroundImage {
+    //随机使用自带图片设为背景
+    NSInteger i = arc4random() % 5 + 1;
+    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Image%ld", (long)i]];
+    self.imageView.image = image;
+    
+    [self.view insertSubview:self.imageView atIndex:0];
+}
+
+- (void)userBackGroundImage {
+    //随机使用用户导入图片设为背景
+    NSInteger i = arc4random() % self.dataModel.imageURLArray.count;
+    UIImage *image = [UIImage imageWithContentsOfFile:self.dataModel.imageURLArray[i]];
+    self.imageView.image = image;
+    
+    [self.view insertSubview:self.imageView atIndex:0];
 }
 
 @end

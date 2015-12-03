@@ -11,9 +11,17 @@
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [WXApi handleOpenURL:url delegate:self];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [WXApi registerApp:@"wx25022e7f7a332f5d"];
     return YES;
 }
 

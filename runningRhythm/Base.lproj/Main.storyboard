@@ -273,7 +273,6 @@
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -300,11 +299,11 @@
             </objects>
             <point key="canvasLocation" x="2770" y="1102"/>
         </scene>
-        <!--个人统计-->
+        <!--奔跑节奏-个人统计-->
         <scene sceneID="0gb-Lu-oZI">
             <objects>
                 <tableViewController storyboardIdentifier="satisticsTableViewController" id="BjV-EH-MQB" customClass="satisticsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="p6L-1L-QMC">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="p6L-1L-QMC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -322,7 +321,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GAe-ja-r1M">
@@ -330,13 +329,14 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -344,13 +344,19 @@
                             <outlet property="delegate" destination="BjV-EH-MQB" id="ijB-24-y2g"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="个人统计" id="HwM-l8-8Kp"/>
+                    <navigationItem key="navigationItem" title="奔跑节奏-个人统计" id="HwM-l8-8Kp">
+                        <barButtonItem key="rightBarButtonItem" image="users" id="OSK-kz-gcA">
+                            <connections>
+                                <action selector="shareToWeixin:" destination="BjV-EH-MQB" id="Jmd-Zx-zyw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yBh-lN-qab" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3530" y="765"/>
         </scene>
-        <!--奔跑轨迹-->
+        <!--奔跑节奏-轨迹记录-->
         <scene sceneID="WpB-wE-zeo">
             <objects>
                 <viewController storyboardIdentifier="traceViewController" id="9eR-bG-6Co" customClass="traceViewController" sceneMemberID="viewController">
@@ -373,65 +379,70 @@
                                 <rect key="frame" x="20" y="72" width="560" height="21"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="HvA-de-XQp"/>
+                                    <constraint firstAttribute="height" constant="21" id="QoY-nI-BYJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pEx-FV-Got">
                                 <rect key="frame" x="20" y="318" width="560" height="40"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="cX5-bF-UrF"/>
+                                    <constraint firstAttribute="height" constant="40" id="2z3-SP-iD6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2g-UZ-bab">
                                 <rect key="frame" x="20" y="366" width="560" height="40"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="hxa-4Q-Dd0"/>
+                                    <constraint firstAttribute="height" constant="40" id="6NE-Hg-Roa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c3y-q7-Otj">
                                 <rect key="frame" x="20" y="414" width="560" height="40"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="3Xk-3x-Jd2"/>
+                                    <constraint firstAttribute="height" constant="40" id="tkY-Jl-E7v"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="pEx-FV-Got" firstAttribute="top" secondItem="HtF-Km-z3E" secondAttribute="bottom" constant="8" symbolic="YES" id="29J-yD-EgD"/>
-                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="leading" secondItem="xkx-I9-xhv" secondAttribute="leadingMargin" id="3iI-EX-OzK"/>
-                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="leading" secondItem="pEx-FV-Got" secondAttribute="leading" id="78g-15-5eg"/>
-                            <constraint firstItem="HtF-Km-z3E" firstAttribute="leading" secondItem="pEx-FV-Got" secondAttribute="leading" id="86D-yA-0Mc"/>
-                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="leading" secondItem="c3y-q7-Otj" secondAttribute="leading" id="Ktv-Ta-uvT"/>
-                            <constraint firstItem="SBC-iS-rkq" firstAttribute="top" secondItem="c3y-q7-Otj" secondAttribute="bottom" constant="102" id="MZs-Hh-UpI"/>
-                            <constraint firstItem="c3y-q7-Otj" firstAttribute="trailing" secondItem="xkx-I9-xhv" secondAttribute="trailingMargin" id="WuV-ft-6cA"/>
-                            <constraint firstItem="GED-g3-HjL" firstAttribute="leading" secondItem="HtF-Km-z3E" secondAttribute="leading" id="ZtN-qK-1EL"/>
-                            <constraint firstItem="c3y-q7-Otj" firstAttribute="trailing" secondItem="Q2g-UZ-bab" secondAttribute="trailing" id="cFc-sG-VEr"/>
-                            <constraint firstItem="pEx-FV-Got" firstAttribute="trailing" secondItem="HtF-Km-z3E" secondAttribute="trailing" id="col-gl-zMj"/>
-                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="top" secondItem="pEx-FV-Got" secondAttribute="bottom" constant="8" symbolic="YES" id="gBX-gw-T5S"/>
-                            <constraint firstItem="HtF-Km-z3E" firstAttribute="trailing" secondItem="GED-g3-HjL" secondAttribute="trailing" id="mAa-nr-4eO"/>
-                            <constraint firstItem="pEx-FV-Got" firstAttribute="trailing" secondItem="Q2g-UZ-bab" secondAttribute="trailing" id="o9A-UX-NxR"/>
-                            <constraint firstItem="GED-g3-HjL" firstAttribute="top" secondItem="Icx-M4-ggM" secondAttribute="bottom" constant="8" symbolic="YES" id="p6t-88-VeN"/>
-                            <constraint firstItem="c3y-q7-Otj" firstAttribute="top" secondItem="Q2g-UZ-bab" secondAttribute="bottom" constant="8" symbolic="YES" id="rpy-WW-4Ai"/>
-                            <constraint firstItem="HtF-Km-z3E" firstAttribute="top" secondItem="GED-g3-HjL" secondAttribute="bottom" constant="8" symbolic="YES" id="y8B-SO-fnf"/>
+                            <constraint firstItem="HtF-Km-z3E" firstAttribute="top" secondItem="GED-g3-HjL" secondAttribute="bottom" constant="8" symbolic="YES" id="0fz-88-azB"/>
+                            <constraint firstItem="pEx-FV-Got" firstAttribute="top" secondItem="HtF-Km-z3E" secondAttribute="bottom" constant="8" symbolic="YES" id="1xL-tG-joq"/>
+                            <constraint firstItem="HtF-Km-z3E" firstAttribute="trailing" secondItem="pEx-FV-Got" secondAttribute="trailing" id="6PG-sp-0DZ"/>
+                            <constraint firstItem="HtF-Km-z3E" firstAttribute="leading" secondItem="pEx-FV-Got" secondAttribute="leading" id="EF2-n4-Cx8"/>
+                            <constraint firstItem="GED-g3-HjL" firstAttribute="top" secondItem="Icx-M4-ggM" secondAttribute="bottom" constant="8" symbolic="YES" id="FxY-A6-2F7"/>
+                            <constraint firstItem="HtF-Km-z3E" firstAttribute="trailing" secondItem="GED-g3-HjL" secondAttribute="trailing" id="QZ9-8i-eap"/>
+                            <constraint firstItem="c3y-q7-Otj" firstAttribute="trailing" secondItem="xkx-I9-xhv" secondAttribute="trailingMargin" id="Vby-fG-UwU"/>
+                            <constraint firstItem="pEx-FV-Got" firstAttribute="leading" secondItem="Q2g-UZ-bab" secondAttribute="leading" id="aA4-JV-wI6"/>
+                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="trailing" secondItem="pEx-FV-Got" secondAttribute="trailing" id="bFl-Co-UrY"/>
+                            <constraint firstItem="c3y-q7-Otj" firstAttribute="top" secondItem="Q2g-UZ-bab" secondAttribute="bottom" constant="8" symbolic="YES" id="c4R-ac-0wL"/>
+                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="top" secondItem="pEx-FV-Got" secondAttribute="bottom" constant="8" symbolic="YES" id="mtV-qj-Ola"/>
+                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="trailing" secondItem="c3y-q7-Otj" secondAttribute="trailing" id="n8Z-yH-3oi"/>
+                            <constraint firstItem="SBC-iS-rkq" firstAttribute="top" secondItem="c3y-q7-Otj" secondAttribute="bottom" constant="102" id="sBg-7I-fHZ"/>
+                            <constraint firstItem="c3y-q7-Otj" firstAttribute="leading" secondItem="xkx-I9-xhv" secondAttribute="leadingMargin" id="stO-8b-FhZ"/>
+                            <constraint firstItem="Q2g-UZ-bab" firstAttribute="leading" secondItem="c3y-q7-Otj" secondAttribute="leading" id="wDh-jG-lvS"/>
+                            <constraint firstItem="GED-g3-HjL" firstAttribute="leading" secondItem="HtF-Km-z3E" secondAttribute="leading" id="zGE-aZ-Pjr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="奔跑轨迹" id="YKI-ST-gY7"/>
+                    <navigationItem key="navigationItem" title="奔跑节奏-轨迹记录" id="YKI-ST-gY7">
+                        <barButtonItem key="rightBarButtonItem" image="users" id="pAe-bR-Kca">
+                            <connections>
+                                <action selector="shareToWeixin:" destination="9eR-bG-6Co" id="8wG-89-p7W"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="dateLabel" destination="GED-g3-HjL" id="iQy-F3-ITN"/>
                         <outlet property="distanceLabel" destination="pEx-FV-Got" id="Fuh-Ex-DB1"/>
@@ -544,5 +555,6 @@
         <image name="previous" width="256" height="256"/>
         <image name="question-frame" width="32" height="32"/>
         <image name="round" width="256" height="256"/>
+        <image name="users" width="32" height="32"/>
     </resources>
 </document>

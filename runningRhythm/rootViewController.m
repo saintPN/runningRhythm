@@ -19,7 +19,7 @@
     self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentViewController"];
     self.leftMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"leftViewController"];
     self.rightMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"rightViewController"];
-    self.backgroundImage = [UIImage imageNamed:@"guideViewImage"];
+    self.backgroundImage = [UIImage imageNamed:@"气球"];
     self.delegate = self;
 }
 

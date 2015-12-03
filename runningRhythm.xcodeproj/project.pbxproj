@@ -26,6 +26,13 @@
 		858831291BF6D03A003F1841 /* RUN.m in Sources */ = {isa = PBXBuildFile; fileRef = 858831251BF6D03A003F1841 /* RUN.m */; settings = {ASSET_TAGS = (); }; };
 		8588312B1BF6D4D7003F1841 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8588312A1BF6D4D7003F1841 /* MapKit.framework */; };
 		858831311BF77DC7003F1841 /* traceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 858831301BF77DC7003F1841 /* traceViewController.m */; settings = {ASSET_TAGS = (); }; };
+		859EC3351C075D8700E1DAA7 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EC3301C075D8700E1DAA7 /* libWeChatSDK.a */; settings = {ASSET_TAGS = (); }; };
+		859EC3361C075D8700E1DAA7 /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 859EC3311C075D8700E1DAA7 /* read_me.txt */; settings = {ASSET_TAGS = (); }; };
+		859EC3381C075DB400E1DAA7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EC3371C075DB400E1DAA7 /* SystemConfiguration.framework */; };
+		859EC33A1C075E2300E1DAA7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EC3391C075E2300E1DAA7 /* libz.tbd */; };
+		859EC33C1C075E3800E1DAA7 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EC33B1C075E3800E1DAA7 /* libsqlite3.0.tbd */; };
+		859EC33E1C075E4700E1DAA7 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EC33D1C075E4700E1DAA7 /* libc++.tbd */; };
+		859EC3401C075F7500E1DAA7 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859EC33F1C075F7500E1DAA7 /* CoreTelephony.framework */; };
 		85A51D501BD7BC530043BE66 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85A51D4E1BD7BC530043BE66 /* Model.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		85A51D581BD7C22A0043BE66 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85A51D571BD7C22A0043BE66 /* CoreData.framework */; };
 		85A51D5B1BDE55050043BE66 /* saintPNTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A51D5A1BDE55050043BE66 /* saintPNTableViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -82,6 +89,16 @@
 		8588312A1BF6D4D7003F1841 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		8588312F1BF77DC7003F1841 /* traceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = traceViewController.h; sourceTree = "<group>"; };
 		858831301BF77DC7003F1841 /* traceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = traceViewController.m; sourceTree = "<group>"; };
+		859EC3301C075D8700E1DAA7 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		859EC3311C075D8700E1DAA7 /* read_me.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = read_me.txt; sourceTree = "<group>"; };
+		859EC3321C075D8700E1DAA7 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		859EC3331C075D8700E1DAA7 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		859EC3341C075D8700E1DAA7 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		859EC3371C075DB400E1DAA7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		859EC3391C075E2300E1DAA7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		859EC33B1C075E3800E1DAA7 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		859EC33D1C075E4700E1DAA7 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		859EC33F1C075F7500E1DAA7 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		85A51D4F1BD7BC530043BE66 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		85A51D571BD7C22A0043BE66 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		85A51D591BDE55050043BE66 /* saintPNTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saintPNTableViewController.h; sourceTree = "<group>"; };
@@ -106,6 +123,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				859EC3401C075F7500E1DAA7 /* CoreTelephony.framework in Frameworks */,
+				859EC33E1C075E4700E1DAA7 /* libc++.tbd in Frameworks */,
+				859EC33C1C075E3800E1DAA7 /* libsqlite3.0.tbd in Frameworks */,
+				859EC33A1C075E2300E1DAA7 /* libz.tbd in Frameworks */,
+				859EC3381C075DB400E1DAA7 /* SystemConfiguration.framework in Frameworks */,
+				859EC3351C075D8700E1DAA7 /* libWeChatSDK.a in Frameworks */,
 				8588312B1BF6D4D7003F1841 /* MapKit.framework in Frameworks */,
 				85A51D581BD7C22A0043BE66 /* CoreData.framework in Frameworks */,
 				851B41501B90306800DA7CE5 /* Foundation.framework in Frameworks */,
@@ -189,6 +212,18 @@
 			path = RESideMenu;
 			sourceTree = "<group>";
 		};
+		859EC32F1C075D8700E1DAA7 /* SDK1.6.2 */ = {
+			isa = PBXGroup;
+			children = (
+				859EC3301C075D8700E1DAA7 /* libWeChatSDK.a */,
+				859EC3311C075D8700E1DAA7 /* read_me.txt */,
+				859EC3321C075D8700E1DAA7 /* WechatAuthSDK.h */,
+				859EC3331C075D8700E1DAA7 /* WXApi.h */,
+				859EC3341C075D8700E1DAA7 /* WXApiObject.h */,
+			);
+			path = SDK1.6.2;
+			sourceTree = "<group>";
+		};
 		85C4F3521B739DA90063CA54 = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +261,12 @@
 			children = (
 				85C4F35F1B739DA90063CA54 /* Info.plist */,
 				85C4F3601B739DA90063CA54 /* main.m */,
+				859EC32F1C075D8700E1DAA7 /* SDK1.6.2 */,
+				859EC33D1C075E4700E1DAA7 /* libc++.tbd */,
+				859EC33B1C075E3800E1DAA7 /* libsqlite3.0.tbd */,
+				859EC3391C075E2300E1DAA7 /* libz.tbd */,
+				859EC33F1C075F7500E1DAA7 /* CoreTelephony.framework */,
+				859EC3371C075DB400E1DAA7 /* SystemConfiguration.framework */,
 				8588312A1BF6D4D7003F1841 /* MapKit.framework */,
 				85A51D571BD7C22A0043BE66 /* CoreData.framework */,
 				851B414F1B90306800DA7CE5 /* Foundation.framework */,
@@ -337,6 +378,7 @@
 			files = (
 				85C4F36A1B739DA90063CA54 /* Main.storyboard in Resources */,
 				85C4F36F1B739DA90063CA54 /* LaunchScreen.xib in Resources */,
+				859EC3361C075D8700E1DAA7 /* read_me.txt in Resources */,
 				85C4F36C1B739DA90063CA54 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,9 +552,13 @@
 				INFOPLIST_FILE = runningRhythm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/runningRhythm/SDK1.6.2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.saintPN.runningRhythm;
 				PRODUCT_NAME = "奔跑节奏";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "94650bca-e37f-4f4b-9407-de9b6c3b7359";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -527,9 +573,13 @@
 				INFOPLIST_FILE = runningRhythm/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/runningRhythm/SDK1.6.2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.saintPN.runningRhythm;
 				PRODUCT_NAME = "奔跑节奏";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "94650bca-e37f-4f4b-9407-de9b6c3b7359";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

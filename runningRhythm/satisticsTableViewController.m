@@ -187,7 +187,7 @@
 
 - (void)randomBackGroundImage {
     //随机使用自带图片设为背景
-    NSInteger i = arc4random() % 5 + 1;
+    NSInteger i = arc4random() % 9 + 1;
     UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Image%ld", (long)i]];
     self.imageView.image = image;
     
@@ -196,7 +196,7 @@
 
 - (void)userBackGroundImage {
     //随机使用用户导入图片设为背景
-    NSInteger i = arc4random() % self.dataModel.imageURLArray.count;
+    NSInteger i = arc4random() % self.dataModel.imageURLArray.count + 1;
     UIImage *image = [UIImage imageWithContentsOfFile:self.dataModel.imageURLArray[i]];
     self.imageView.image = image;
     

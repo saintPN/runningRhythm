@@ -9,6 +9,12 @@
 #import "AppDelegate.h"
 #import "saintPNViewController.h"
 
+@interface AppDelegate ()
+
+@property (strong,nonatomic) UIImageView *imageView;
+
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
@@ -22,7 +28,31 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [WXApi registerApp:@"wx25022e7f7a332f5d"];
+    
+    [self.window makeKeyAndVisible];
+    self.imageView = [[UIImageView alloc] init];
+    self.imageView.frame = CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height);
+    self.imageView.image = [UIImage imageNamed:@"run"];
+    [self.window addSubview:self.imageView];
+    [self.window bringSubviewToFront:self.imageView];
+    
+    CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    self.imageView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+    ani.fromValue = @1.0;
+    ani.toValue = @1.3;
+    ani.fillMode = kCAFillModeForwards;
+    ani.removedOnCompletion = NO;
+    [ani setAutoreverses:NO];
+    ani.duration = 1;
+    ani.delegate = self;
+    
+    [self.imageView.layer addAnimation:ani forKey:@"scale"];
     return YES;
+}
+
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    [self.imageView removeFromSuperview];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

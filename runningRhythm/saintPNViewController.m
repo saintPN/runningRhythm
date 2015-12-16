@@ -108,7 +108,7 @@
 
 - (void)randomBackGroundImage {
     //随机使用自带图片设为背景
-    NSInteger i = arc4random() % 5 + 1;
+    NSInteger i = arc4random() % 9 + 1;
     UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Image%ld", (long)i]];
     self.imageView.image = image;
  
@@ -117,7 +117,7 @@
 
 - (void)userBackGroundImage {
     //随机使用用户导入图片设为背景
-    NSInteger i = arc4random() % self.dataModel.imageURLArray.count;
+    NSInteger i = arc4random() % self.dataModel.imageURLArray.count + 1;
     UIImage *image = [UIImage imageWithContentsOfFile:self.dataModel.imageURLArray[i]];
     self.imageView.image = image;
     
@@ -218,21 +218,47 @@
 }
 
 - (IBAction)reset:(UIButton *)sender {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults integerForKey:@"countdownTime"]) {
-        [defaults removeObjectForKey:@"countdownTime"];
-        if (self.locationManager) {
-            [self.locationManager stopUpdatingLocation];
-        }
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"保存"
+                                                                   message:@"保存本次数据?"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction1 = [UIAlertAction actionWithTitle:@"放弃" style:UIAlertActionStyleCancel
+                                                                        handler:^(UIAlertAction * action) {
+                                                                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                                                            if ([defaults integerForKey:@"countdownTime"]) {
+                                                                                [defaults removeObjectForKey:@"countdownTime"];
+                                                                            }
+                                                                            if (self.locationManager) {
+                                                                                [self.locationManager stopUpdatingLocation];
+                                                                              }
+                                                                            self.timer = nil;
+                                                                            self.distance = 0;
+                                                                            self.countdownTime = 0;
+                                                                            self.countdownLabel.text = @"00:00";
+                                                                            self.speedLabel.text = @"速度:0.0米/秒";
+                                                                            self.distanceLabel.text = @"距离:0.0公里";
+                                                                          }];
+    UIAlertAction* defaultAction2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                                        handler:^(UIAlertAction * action) {
+                                                                   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                                                   if ([defaults integerForKey:@"countdownTime"]) {
+                                                                       [defaults removeObjectForKey:@"countdownTime"];
+                                                                   }
+                                                                   if (self.locationManager) {
+                                                                       [self.locationManager stopUpdatingLocation];
+                                                                   }
+                                                                   [self saveRun];
+                                                                   self.timer = nil;
+                                                                   self.distance = 0;
+                                                                   self.countdownTime = 0;
+                                                                   self.countdownLabel.text = @"00:00";
+                                                                   self.speedLabel.text = @"速度:0.0米/秒";
+                                                                   self.distanceLabel.text = @"距离:0.0公里";
+                                                               }];
         
-        [self saveRun];
-        self.timer = nil;
-        self.distance = 0;
-        self.countdownTime = 0;
-        self.countdownLabel.text = @"00:00";
-        self.speedLabel.text = @"速度:0.0米/秒";
-        self.distanceLabel.text = @"距离:0.0公里";
-    }
+    [alert addAction:defaultAction1];
+    [alert addAction:defaultAction2];
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 #pragma mark - 保存记录

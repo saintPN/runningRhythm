@@ -9,6 +9,8 @@
 #import "saintPNViewController.h"
 #import "saintPNTableViewController.h"
 
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
 @implementation saintPNViewController
 
@@ -31,6 +33,7 @@
 
     self.speedLabel.text = @"速度:0.0米/秒";
     self.distanceLabel.text = @"距离:0.0公里";
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -218,6 +221,7 @@
 }
 
 - (IBAction)reset:(UIButton *)sender {
+    __weak __typeof (self) weakSelf = self;
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"保存"
                                                                    message:@"保存本次数据?"
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -227,15 +231,15 @@
                                                                             if ([defaults integerForKey:@"countdownTime"]) {
                                                                                 [defaults removeObjectForKey:@"countdownTime"];
                                                                             }
-                                                                            if (self.locationManager) {
-                                                                                [self.locationManager stopUpdatingLocation];
+                                                                            if (weakSelf.locationManager) {
+                                                                                [weakSelf.locationManager stopUpdatingLocation];
                                                                               }
-                                                                            self.timer = nil;
-                                                                            self.distance = 0;
-                                                                            self.countdownTime = 0;
-                                                                            self.countdownLabel.text = @"00:00";
-                                                                            self.speedLabel.text = @"速度:0.0米/秒";
-                                                                            self.distanceLabel.text = @"距离:0.0公里";
+                                                                            weakSelf.timer = nil;
+                                                                            weakSelf.distance = 0;
+                                                                            weakSelf.countdownTime = 0;
+                                                                            weakSelf.countdownLabel.text = @"00:00";
+                                                                            weakSelf.speedLabel.text = @"速度:0.0米/秒";
+                                                                            weakSelf.distanceLabel.text = @"距离:0.0公里";
                                                                           }];
     UIAlertAction* defaultAction2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                                         handler:^(UIAlertAction * action) {
@@ -243,16 +247,17 @@
                                                                    if ([defaults integerForKey:@"countdownTime"]) {
                                                                        [defaults removeObjectForKey:@"countdownTime"];
                                                                    }
-                                                                   if (self.locationManager) {
-                                                                       [self.locationManager stopUpdatingLocation];
+                                                                   if (weakSelf.locationManager) {
+                                                                       [weakSelf.locationManager stopUpdatingLocation];
                                                                    }
-                                                                   [self saveRun];
-                                                                   self.timer = nil;
-                                                                   self.distance = 0;
-                                                                   self.countdownTime = 0;
-                                                                   self.countdownLabel.text = @"00:00";
-                                                                   self.speedLabel.text = @"速度:0.0米/秒";
-                                                                   self.distanceLabel.text = @"距离:0.0公里";
+                                                                   [weakSelf saveRun];
+                                                                   [weakSelf saveAnimation];
+                                                                   weakSelf.timer = nil;
+                                                                   weakSelf.distance = 0;
+                                                                   weakSelf.countdownTime = 0;
+                                                                   weakSelf.countdownLabel.text = @"00:00";
+                                                                   weakSelf.speedLabel.text = @"速度:0.0米/秒";
+                                                                   weakSelf.distanceLabel.text = @"距离:0.0公里";
                                                                }];
         
     [alert addAction:defaultAction1];
@@ -290,6 +295,51 @@
         abort();
     }
 }
+
+//保存动画
+- (void)saveAnimation {
+    self.layer = [CALayer layer];
+    self.layer.frame = CGRectMake(16, 575, 51, 50);
+    self.layer.contents = (__bridge id _Nullable)([UIImage imageNamed:@"run"].CGImage);
+    self.layer.cornerRadius = CGRectGetHeight(self.layer.bounds)/2;
+    self.layer.masksToBounds = YES;
+    [self.view.layer addSublayer:self.layer];
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:self.layer.position];
+    [path addQuadCurveToPoint:CGPointMake(SCREEN_WIDTH-40, SCREEN_HEIGHT/9) controlPoint:CGPointMake(SCREEN_WIDTH/5, SCREEN_HEIGHT/3)];
+    
+    CAKeyframeAnimation *a1 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    a1.path = path.CGPath;
+    a1.rotationMode = kCAAnimationRotateAuto;
+    
+    CABasicAnimation *a2 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    a2.duration = 0.5f;
+    a2.fromValue = [NSNumber numberWithFloat:1];
+    a2.toValue = [NSNumber numberWithFloat:3];
+    a2.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    
+    CABasicAnimation *a3 = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    a3.beginTime = 0.5;
+    a3.fromValue = [NSNumber numberWithFloat:3];
+    a3.duration = 1.5f;
+    a3.toValue = [NSNumber numberWithFloat:1];
+    a3.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = @[a1, a2, a3];
+    group.duration = 2;
+    group.removedOnCompletion = NO;
+    group.fillMode = kCAFillModeForwards;
+    group.delegate = self;
+    
+    [self.layer addAnimation:group forKey:@"group"];
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    [self.layer removeFromSuperlayer];
+}
+
 #pragma mark - 播放器逻辑
 
 - (IBAction)play:(UIButton *)sender {
@@ -362,7 +412,7 @@
     }
 }
 
-#pragma mark - 远程控制
+#pragma mark - 锁屏控制
 
 - (void)configPlayingInfo {
     if (NSClassFromString(@"MPNoewPlayingInfoCenter")) {

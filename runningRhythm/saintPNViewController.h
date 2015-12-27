@@ -52,6 +52,8 @@
 
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 
+@property (strong, nonatomic) CALayer *layer;
+
 @property BOOL isPlaying;
 
 @property __block NSInteger runTime;

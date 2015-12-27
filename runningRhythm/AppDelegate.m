@@ -31,7 +31,7 @@
     
     [self.window makeKeyAndVisible];
     self.imageView = [[UIImageView alloc] init];
-    self.imageView.frame = CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height);
+    self.imageView.frame = [UIScreen mainScreen].bounds;
     self.imageView.image = [UIImage imageNamed:@"run"];
     [self.window addSubview:self.imageView];
     [self.window bringSubviewToFront:self.imageView];
